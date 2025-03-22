@@ -31,7 +31,8 @@ def main():
     max_steps = 100    # Maximum steps per episode
 
     for episode in range(num_episodes):
-        grid_size = random.randint(5, 10)
+        size_limit = 5 + episode // 1000
+        grid_size = random.randint(5, size_limit)
         env = SimpleTaxiEnv(grid_size=grid_size, fuel_limit=5000)
         state, _ = env.reset()
         total_reward = 0
