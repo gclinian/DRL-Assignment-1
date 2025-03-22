@@ -22,12 +22,12 @@ def main():
     q_table = {}
     
     # Hyperparameters for Q-learning
-    alpha = 0.1          # Learning rate
+    alpha = 0.01         # Learning rate
     gamma = 0.999        # Discount factor
     epsilon = 1.0        # Initial exploration rate
     epsilon_min = 0.1    # Minimum exploration rate
-    epsilon_decay = 0.99975  # Decay factor for exploration rate
-    num_episodes = 10000  # Number of training episodes
+    epsilon_decay = 0.99988  # Decay factor for exploration rate
+    num_episodes = 20000  # Number of training episodes
     max_steps = 500    # Maximum steps per episode
 
     for episode in range(num_episodes):
