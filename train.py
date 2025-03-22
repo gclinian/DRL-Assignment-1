@@ -15,7 +15,7 @@ def get_action(state, q_table, epsilon, n_actions):
 
 def main():
     # Create the environment
-    env = SimpleTaxiEnv(grid_size=5, fuel_limit=50)
+    env = SimpleTaxiEnv(grid_size=10, fuel_limit=5000)
     n_actions = 6  # [Move Down, Move Up, Move Right, Move Left, PICKUP, DROPOFF]
     
     # Initialize Q-table as a dictionary: key=state (tuple), value=np.array of Q-values
@@ -23,17 +23,17 @@ def main():
     
     # Hyperparameters for Q-learning
     alpha = 0.1          # Learning rate
-    gamma = 0.99         # Discount factor
+    gamma = 0.999        # Discount factor
     epsilon = 1.0        # Initial exploration rate
     epsilon_min = 0.1    # Minimum exploration rate
     epsilon_decay = 0.99975  # Decay factor for exploration rate
     num_episodes = 10000  # Number of training episodes
-    max_steps = 100    # Maximum steps per episode
+    max_steps = 500    # Maximum steps per episode
 
     for episode in range(num_episodes):
-        size_limit = 5 + episode // 1000
-        grid_size = random.randint(5, size_limit)
-        env = SimpleTaxiEnv(grid_size=grid_size, fuel_limit=5000)
+        # size_limit = 5 + episode // 1000
+        # grid_size = random.randint(5, size_limit)
+        # env = SimpleTaxiEnv(grid_size=10, fuel_limit=5000)
         state, _ = env.reset()
         total_reward = 0
         done = False
