@@ -21,7 +21,7 @@ def get_action(obs):
     if obs in Q_table:     
         return np.argmax(Q_table[obs])
     else:
-        return np.random.choice([0,1,2,3,4,5])
+        return np.random.choice([0,1,2,3])
     # return np.random.choice([0,1,2,3,4,5])
     # You can submit this random agent to evaluate the performance of a purely random strategy.
 
