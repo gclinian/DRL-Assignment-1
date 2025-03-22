@@ -26,8 +26,8 @@ def main():
     gamma = 0.99         # Discount factor
     epsilon = 1.0        # Initial exploration rate
     epsilon_min = 0.1    # Minimum exploration rate
-    epsilon_decay = 0.995  # Decay factor for exploration rate
-    num_episodes = 5000  # Number of training episodes
+    epsilon_decay = 0.9997  # Decay factor for exploration rate
+    num_episodes = 10000  # Number of training episodes
     max_steps = 100      # Maximum steps per episode
 
     for episode in range(num_episodes):
@@ -53,7 +53,7 @@ def main():
 
         # Decay epsilon
         epsilon = max(epsilon_min, epsilon * epsilon_decay)
-        print(f"Episode {episode+1}/{num_episodes} - Total Reward: {total_reward}")
+        print(f"Episode {episode+1}/{num_episodes} - Total Reward: {total_reward} - Episilon: {epsilon}")
 
     # Save the Q-table using pickle
     with open("q_table.pkl", "wb") as f:
