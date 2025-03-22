@@ -32,7 +32,7 @@ def main():
 
     for episode in range(num_episodes):
         grid_size = random.randint(5, 10)
-        env = SimpleTaxiEnv(grid_size=grid_size, fuel_limit=50)
+        env = SimpleTaxiEnv(grid_size=grid_size, fuel_limit=5000)
         state, _ = env.reset()
         total_reward = 0
         done = False
