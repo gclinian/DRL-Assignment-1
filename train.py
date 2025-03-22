@@ -26,11 +26,13 @@ def main():
     gamma = 0.99         # Discount factor
     epsilon = 1.0        # Initial exploration rate
     epsilon_min = 0.1    # Minimum exploration rate
-    epsilon_decay = 0.9997  # Decay factor for exploration rate
+    epsilon_decay = 0.99975  # Decay factor for exploration rate
     num_episodes = 10000  # Number of training episodes
-    max_steps = 500      # Maximum steps per episode
+    max_steps = 100    # Maximum steps per episode
 
     for episode in range(num_episodes):
+        grid_size = random.randint(5, 10)
+        env = SimpleTaxiEnv(grid_size=grid_size, fuel_limit=50)
         state, _ = env.reset()
         total_reward = 0
         done = False
@@ -53,7 +55,7 @@ def main():
 
         # Decay epsilon
         epsilon = max(epsilon_min, epsilon * epsilon_decay)
-        print(f"Episode {episode+1}/{num_episodes} - Total Reward: {total_reward} - Episilon: {epsilon}")
+        print(f"Episode {episode+1}/{num_episodes} | Total Reward: {total_reward} | Episilon: {epsilon}")
 
     # Save the Q-table using pickle
     with open("q_table.pkl", "wb") as f:
