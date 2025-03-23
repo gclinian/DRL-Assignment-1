@@ -40,8 +40,8 @@ def get_state(obs):
     if passenger_picked and prev_action == 5:
         passenger_picked = False
     
-    state = (*obs, passenger_picked)
-    return state
+    return (obs[0], obs[1], obs[10], obs[11], obs[12], obs[13], obs[14], obs[15], passenger_picked)
+    
         
 
          
