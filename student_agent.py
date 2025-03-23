@@ -1,4 +1,4 @@
-
+'''
 # Remember to adjust your student ID in meta.xml
 import numpy as np
 import pickle
@@ -78,39 +78,30 @@ import random
 import gym
 
 
-class DQN(nn.Module):
-    def __init__(self, state_dim, action_dim):
-        super(DQN, self).__init__()
-        # A simple 2-layer MLP
-        self.net = nn.Sequential(
-            nn.Linear(state_dim, 64),
-            nn.ReLU(),
-            nn.Linear(64, 64),
-            nn.ReLU(),
-            nn.Linear(64, action_dim)
-        )
+class QNetwork(nn.Module):
+    def __init__(self, state_size, action_size, hidden_size=128):
+        super(QNetwork, self).__init__()
+        # A simple 2-hidden-layer MLP for demonstration
+        self.fc1 = nn.Linear(state_size, hidden_size)
+        self.fc2 = nn.Linear(hidden_size, hidden_size)
+        self.fc3 = nn.Linear(hidden_size, action_size)
         
     def forward(self, x):
-        return self.net(x)
+        x = torch.relu(self.fc1(x))
+        x = torch.relu(self.fc2(x))
+        return self.fc3(x)
 
 
-def state_to_tensor(state):
-    # State is a 16-element tuple; turn it into a float tensor of shape [1, state_dim].
-    return torch.tensor(state, dtype=torch.float32).unsqueeze(0)
 
+policy_net = QNetwork(state_size=16, action_size=6)
+policy_net.load_state_dict(torch.load("taxi_dqn_model.pth"))
+policy_net.eval()
 
-# Load model
-loaded_dqn = DQN(state_dim=16, action_dim=6)
-loaded_dqn.load_state_dict(torch.load("dqn_taxi_model.pth"))
-loaded_dqn.eval()  # set to evaluation mode
 
 
 def get_action(state):
-    """
-    Given a trained DQN model and a state (tuple), return the action (int).
-    """
-    with torch.no_grad():
-        q_values = loaded_dqn(state_to_tensor(state))
-        action = int(torch.argmax(q_values, dim=1).item())
+    state_tensor = torch.FloatTensor(state).unsqueeze(0)
+    action_values = policy_net(state_tensor)
+    action = action_values.argmax().item()
     return action
-'''
+
