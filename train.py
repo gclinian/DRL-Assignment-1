@@ -65,7 +65,7 @@ def main():
     gamma = 0.995       # Discount factor
     epsilon = 1       # Initial exploration rate
     epsilon_min = 0.1    # Minimum exploration rate
-    epsilon_decay = 0.9995  # Decay factor for exploration rate
+    epsilon_decay = 0.99977  # Decay factor for exploration rate
     num_episodes = 10000  # Number of training episodes
     max_steps = 5000    # Maximum steps per episode
 
