@@ -48,14 +48,13 @@ def get_state(obs):
 
     dirs = [(trans(taxi_pos[0], stations[i][0]), trans(taxi_pos[1], stations[i][1])) for i in range(4)]
     
-    return (*dirs[0], *dirs[1], *dirs[2], *dirs[3], obs[10], obs[11], obs[12], obs[13], obs[14], obs[15], passenger_picked)
+    return (obs[10], obs[11], obs[12], obs[13])
     
         
 
-clock = 0     
 
 def get_action(obs):
-    '''
+    
     state_extend = get_state(obs)
     if state_extend in Q_table:     
         action = np.argmax(Q_table[state_extend])
@@ -63,17 +62,7 @@ def get_action(obs):
         action = np.random.choice([0,1,2,3])
     prev_action = action
     return action
-    '''
-    '''
-    although it's a shame, I give up.
-    the following is up-down method.
-    the agent will move up and down alternatively.
-    I just want the 30 points.
-    I'm sorry..
-    '''
-    global clock
-    clock += 1
-    if clock % 2 == 0:
-        return 1
-    else:
-        return 0
+    
+    
+    
+    

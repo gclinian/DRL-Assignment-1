@@ -36,7 +36,7 @@ def get_state_extend(state, passenger_picked):
 
     dirs = [(trans(taxi_pos[0], stations[i][0]), trans(taxi_pos[1], stations[i][1])) for i in range(4)]
 
-    return (*dirs[0], *dirs[1], *dirs[2], *dirs[3], state[10], state[11], state[12], state[13], state[14], state[15], passenger_picked)
+    return (state[10], state[11], state[12], state[13])
 
 
 
@@ -63,8 +63,8 @@ def main():
     gamma = 0.995       # Discount factor
     epsilon = 1.0        # Initial exploration rate
     epsilon_min = 0.1    # Minimum exploration rate
-    epsilon_decay = 0.999924  # Decay factor for exploration rate
-    num_episodes = 30000  # Number of training episodes
+    epsilon_decay = 0.9977  # Decay factor for exploration rate
+    num_episodes = 1000  # Number of training episodes
     max_steps = 5000    # Maximum steps per episode
 
     for episode in range(num_episodes):
@@ -95,8 +95,7 @@ def main():
                 q_table[next_state_extend] = np.zeros(n_actions)
             
             # reward shaping
-            if not prev_passenger_picked and passenger_picked:
-                reward += 5
+            
 
             total_reward += reward
             # Update Q-value using the Q-learning update rule
