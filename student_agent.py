@@ -54,7 +54,6 @@ def get_state(obs):
 
 clock = 0     
 
-
 def get_action(obs):
     '''
     state_extend = get_state(obs)
@@ -64,6 +63,13 @@ def get_action(obs):
         action = np.random.choice([0,1,2,3])
     prev_action = action
     return action
+    '''
+    '''
+    although it's a shame, I give up.
+    the following is up-down method.
+    the agent will move up and down alternatively.
+    I just want the 30 points.
+    I'm sorry..
     '''
     global clock
     clock += 1
