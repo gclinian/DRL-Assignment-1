@@ -45,8 +45,8 @@ def get_action(state_extend, q_table, epsilon, n_actions):
     # Initialize state in Q-table if unseen
     if state_extend not in q_table:
         q_table[state_extend] = np.zeros(n_actions)
-        q_table[state_extend][4] = -10000000
-        q_table[state_extend][5] = -10000000
+        q_table[state_extend][4] = -100000
+        q_table[state_extend][5] = -100000
     if random.uniform(0, 1) < epsilon:
         return random.randint(0, n_actions - 1)
     else:
@@ -62,7 +62,7 @@ def main():
     
     # Hyperparameters for Q-learning
     alpha = 0.1    # Learning rate
-    gamma = 0.995       # Discount factor
+    gamma = 0.000001      # Discount factor
     epsilon = 1       # Initial exploration rate
     epsilon_min = 0.1    # Minimum exploration rate
     epsilon_decay = 0.99977  # Decay factor for exploration rate
