@@ -61,7 +61,7 @@ def main():
     q_table = {}
     
     # Hyperparameters for Q-learning
-    alpha = 0.5     # Learning rate
+    alpha = 0.1    # Learning rate
     gamma = 0.995       # Discount factor
     epsilon = 1       # Initial exploration rate
     epsilon_min = 0.1    # Minimum exploration rate
