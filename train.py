@@ -59,7 +59,7 @@ def main():
     q_table = {}
     
     # Hyperparameters for Q-learning
-    alpha = 0.5   # Learning rate
+    alpha = 0.1   # Learning rate
     gamma = 0      # Discount factor
     epsilon = 1       # Initial exploration rate
     epsilon_min = 0.1    # Minimum exploration rate
@@ -95,8 +95,8 @@ def main():
                 q_table[next_state_extend] = np.zeros(n_actions)
             
             # reward shaping
-            if reward == -0.1:
-                reward = 1
+            if (state[0], state[1]) != (next_state[0], next_state[1]):
+                reward = 5
 
             total_reward += reward
             # Update Q-value using the Q-learning update rule
