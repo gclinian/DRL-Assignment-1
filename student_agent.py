@@ -57,7 +57,7 @@ def get_state(obs):
 
 def get_action(obs):
     state_extend = get_state(obs)
-    if state_extend in Q_table:     
+    if False and state_extend in Q_table:     
         action = np.argmax(Q_table[state_extend])
     else:
         action = np.random.choice([0,1,2,3])
