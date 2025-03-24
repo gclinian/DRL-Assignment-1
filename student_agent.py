@@ -39,8 +39,22 @@ def get_state(obs):
         
     if passenger_picked and prev_action == 5:
         passenger_picked = False
+
+
+    def trans(x, y):
+        if x < y:
+            return 1
+        elif x > y:
+            return -1
+        else:
+            return 0
+
+
+    dirs = [(0,0) for i in range(4)]
+    for i, station in enumerate(stations):
+        dirs[i] = (trans(taxi_pos[0], station[0]), trans(taxi_pos[1], station[1]))
     
-    return (obs[0], obs[1], obs[10], obs[11], obs[12], obs[13], obs[14], obs[15], passenger_picked)
+    return (dirs[0][0], dirs[0][1], dirs[1][0], dirs[1][1], dirs[2][0], dirs[2][1], dirs[3][0], dirs[3][1], obs[10], obs[11], obs[12], obs[13], obs[14], obs[15], passenger_picked)
     
         
 
@@ -52,7 +66,7 @@ def get_action(obs):
     if state_extend in Q_table:     
         action = np.argmax(Q_table[state_extend])
     else:
-        action = np.random.choice([0,1,2,3])
+        action = np.random.choice([0,1,2,3,4,5])
     prev_action = action
     return action
     

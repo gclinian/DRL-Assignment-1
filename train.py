@@ -27,7 +27,28 @@ def update_passenger_picked(state, prev_action, passenger_picked):
     return passenger_picked
 
 def get_state_extend(state, passenger_picked):
-    return (state[0], state[1], state[10], state[11], state[12], state[13], state[14], state[15], passenger_picked)
+    taxi_pos = (state[0], state[1])
+    stations = [(0,0) for i in range(4)]
+    stations[0] = (state[2], state[3])
+    stations[1] = (state[4], state[5])
+    stations[2] = (state[6], state[7])
+    stations[3] = (state[8], state[9])
+
+    def trans(x, y):
+        if x < y:
+            return 1
+        elif x > y:
+            return -1
+        else:
+            return 0
+
+
+    dirs = [(0,0) for i in range(4)]
+    for i, station in enumerate(stations):
+        dirs[i] = (trans(taxi_pos[0], station[0]), trans(taxi_pos[1], station[1]))
+        
+
+    return (dirs[0][0], dirs[0][1], dirs[1][0], dirs[1][1], dirs[2][0], dirs[2][1], dirs[3][0], dirs[3][1], state[10], state[11], state[12], state[13], state[14], state[15], passenger_picked)
 
 
 def get_action(state_extend, q_table, epsilon, n_actions):
@@ -53,8 +74,8 @@ def main():
     gamma = 0.995       # Discount factor
     epsilon = 1.0        # Initial exploration rate
     epsilon_min = 0.1    # Minimum exploration rate
-    epsilon_decay = 0.9999924  # Decay factor for exploration rate
-    num_episodes = 300000  # Number of training episodes
+    epsilon_decay = 0.99977  # Decay factor for exploration rate
+    num_episodes = 10000  # Number of training episodes
     max_steps = 5000    # Maximum steps per episode
 
     for episode in range(num_episodes):
