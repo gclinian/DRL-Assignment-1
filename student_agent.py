@@ -16,12 +16,8 @@ passenger_picked = False
 def get_state(obs):
     # decode obs
     taxi_pos = (obs[0], obs[1])
-    stations = [(0,0) for i in range(4)]
-    stations[0] = (obs[2], obs[3])
-    stations[1] = (obs[4], obs[5])
-    stations[2] = (obs[6], obs[7])
-    stations[3] = (obs[8], obs[9])
-    
+    stations = [(obs[2 * i + 2], obs[2 * i + 3]) for i in range(4)]
+
     passenger_look = obs[14]
     
 
@@ -50,11 +46,9 @@ def get_state(obs):
             return 0
 
 
-    dirs = [(0,0) for i in range(4)]
-    for i, station in enumerate(stations):
-        dirs[i] = (trans(taxi_pos[0], station[0]), trans(taxi_pos[1], station[1]))
+    dirs = [(trans(taxi_pos[0], stations[i][0]), trans(taxi_pos[1], stations[i][1])) for i in range(4)]
     
-    return (dirs[0][0], dirs[0][1], dirs[1][0], dirs[1][1], dirs[2][0], dirs[2][1], dirs[3][0], dirs[3][1], obs[10], obs[11], obs[12], obs[13], obs[14], obs[15], passenger_picked)
+    return (*dirs[0], *dirs[1], *dirs[2], *dirs[3], obs[10], obs[11], obs[12], obs[13], obs[14], obs[15], passenger_picked)
     
         
 
@@ -66,57 +60,6 @@ def get_action(obs):
     if state_extend in Q_table:     
         action = np.argmax(Q_table[state_extend])
     else:
-        action = np.random.choice([0,1,2,3,4,5])
+        action = np.random.choice([0,1,2,3])
     prev_action = action
     return action
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-'''
-import torch
-import torch.nn as nn
-import numpy as np
-import pickle
-import random
-import gym
-
-
-class QNetwork(nn.Module):
-    def __init__(self, state_size, action_size, hidden_size=128):
-        super(QNetwork, self).__init__()
-        # A simple 2-hidden-layer MLP for demonstration
-        self.fc1 = nn.Linear(state_size, hidden_size)
-        self.fc2 = nn.Linear(hidden_size, hidden_size)
-        self.fc3 = nn.Linear(hidden_size, action_size)
-        
-    def forward(self, x):
-        x = torch.relu(self.fc1(x))
-        x = torch.relu(self.fc2(x))
-        return self.fc3(x)
-
-
-
-policy_net = QNetwork(state_size=16, action_size=6)
-policy_net.load_state_dict(torch.load("taxi_dqn_model.pth"))
-policy_net.eval()
-
-
-
-def get_action(state):
-    state_tensor = torch.FloatTensor(state).unsqueeze(0)
-    action_values = policy_net(state_tensor)
-    action = action_values.argmax().item()
-    return action
-
-'''
