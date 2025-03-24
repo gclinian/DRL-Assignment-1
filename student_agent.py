@@ -52,14 +52,22 @@ def get_state(obs):
     
         
 
-         
+clock = 0     
 
 
 def get_action(obs):
+    '''
     state_extend = get_state(obs)
-    if False and state_extend in Q_table:     
+    if state_extend in Q_table:     
         action = np.argmax(Q_table[state_extend])
     else:
         action = np.random.choice([0,1,2,3])
     prev_action = action
     return action
+    '''
+    global clock
+    clock += 1
+    if clock % 2 == 0:
+        return 1
+    else:
+        return 0
