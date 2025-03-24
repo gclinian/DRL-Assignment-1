@@ -45,6 +45,8 @@ def get_action(state_extend, q_table, epsilon, n_actions):
     # Initialize state in Q-table if unseen
     if state_extend not in q_table:
         q_table[state_extend] = np.zeros(n_actions)
+        q_table[state_extend][4] = -10000000
+        q_table[state_extend][5] = -10000000
     if random.uniform(0, 1) < epsilon:
         return random.randint(0, n_actions - 1)
     else:
@@ -62,9 +64,9 @@ def main():
     alpha = 0.05         # Learning rate
     gamma = 0.995       # Discount factor
     epsilon = 1.0        # Initial exploration rate
-    epsilon_min = 0.1    # Minimum exploration rate
-    epsilon_decay = 0.9977  # Decay factor for exploration rate
-    num_episodes = 1000  # Number of training episodes
+    epsilon_min = 0.01    # Minimum exploration rate
+    epsilon_decay = 0.99954  # Decay factor for exploration rate
+    num_episodes = 10000  # Number of training episodes
     max_steps = 5000    # Maximum steps per episode
 
     for episode in range(num_episodes):
@@ -93,6 +95,8 @@ def main():
             
             if next_state_extend not in q_table:
                 q_table[next_state_extend] = np.zeros(n_actions)
+                q_table[state_extend][4] = -10000000
+                q_table[state_extend][5] = -10000000
             
             # reward shaping
             
